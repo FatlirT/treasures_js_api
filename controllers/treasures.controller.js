@@ -1,13 +1,15 @@
+const {
+    selectAllTreasures,
+} = require(`${__dirname}/../models/treasures.model`);
+
 exports.getAllTreasures = (req, res) => {
-    return res.status(200).send({
-        treasures: [
-            {
-                treasure_name: "treasure-f",
-                colour: "onyx",
-                age: 56,
-                cost_at_auction: "0.01",
-                shop: "shop-e",
-            },
-        ],
-    });
+    selectAllTreasures()
+        .then((dbRes) => {
+            const data = dbRes.rows;
+            data.sort((a, b) => a.age - b.age);
+            res.status(200).send({ treasures: data });
+        })
+        .catch((error) => {
+            next(error);
+        });
 };
