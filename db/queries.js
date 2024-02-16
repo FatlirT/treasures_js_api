@@ -8,7 +8,7 @@ exports.createShopsQuery = `CREATE TABLE shops (
 exports.createTreasuresQuery = `CREATE TABLE treasures (
     treasure_id SERIAL PRIMARY KEY,
     treasure_name VARCHAR,
-    colour VARCHAR,
+    colour VARCHAR NOT NULL,
     age INT,
     cost_at_auction FLOAT,
     shop_id INT REFERENCES shops(shop_id));
