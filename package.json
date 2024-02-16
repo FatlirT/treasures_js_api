@@ -22,10 +22,12 @@
   "license": "ISC",
   "devDependencies": {
     "jest": "^29.6.2",
-    "jest-sorted": "^1.0.11",
+    "jest-sorted": "^1.0.14",
     "supertest": "^6.1.3"
   },
   "jest": {
-    "setupFilesAfterEnv": ["jest-sorted"]
+    "setupFilesAfterEnv": [
+      "jest-sorted"
+    ]
   }
 }

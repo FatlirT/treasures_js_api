@@ -9,7 +9,7 @@ beforeEach(() => seed(data));
 
 describe("treasures", () => {
     describe("GET /api/treasures", () => {
-        test("should return 200 OK when there is treasures", () => {
+        test("should return 200 OK", () => {
             return request(app).get("/api/treasures").expect(200);
         });
         test("should return an Array of treasure objects", () => {
@@ -27,24 +27,28 @@ describe("treasures", () => {
                 .expect(200)
                 .then((res) => {
                     const props = [
+                        "treasure_id",
                         "treasure_name",
                         "colour",
                         "age",
                         "cost_at_auction",
-                        "shop",
+                        "shop_name",
                     ];
                     props.forEach((prop) =>
                         expect(res.body.treasures[0]).toHaveProperty(prop)
                     );
                 });
-            // treasure_name;
-            // colour;
-            // age;
-            // cost_at_auction;
-            // shop;
         });
         test("should return an Array of treasure objects sorted by property Age Ascending", () => {
-            // second;
+            return request(app)
+                .get("/api/treasures")
+                .expect(200)
+                .then((res) => {
+                    const {
+                        body: { treasures },
+                    } = res;
+                    expect(treasures).toBeSortedBy("age");
+                });
         });
     });
 });
