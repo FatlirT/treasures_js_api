@@ -2,11 +2,11 @@ const {
     selectAllTreasures,
 } = require(`${__dirname}/../models/treasures.model`);
 
-exports.getAllTreasures = (req, res) => {
-    selectAllTreasures()
+exports.getAllTreasures = (req, res, next) => {
+    const sort_by = req.query.sort_by;
+    selectAllTreasures(sort_by)
         .then((dbRes) => {
             const data = dbRes.rows;
-            data.sort((a, b) => a.age - b.age);
             res.status(200).send({ treasures: data });
         })
         .catch((error) => {

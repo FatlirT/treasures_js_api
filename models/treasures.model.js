@@ -1,6 +1,21 @@
 const db = require(`${__dirname}/../db`);
-exports.selectAllTreasures = () => {
-    return db.query(`
+
+exports.selectAllTreasures = (sort_by = "age") => {
+    const validColumns = [
+        "treasure_id",
+        "treasure_name",
+        "colour",
+        "age",
+        "cost_at_auction",
+        "shop_name",
+    ];
+
+    if (!validColumns.includes(sort_by)) {
+        throw { status: 400, msg: "Invalid order query" };
+    }
+
+    return db.query(
+        `
     SELECT
         treasures.treasure_id,
         treasures.treasure_name,
@@ -11,6 +26,8 @@ exports.selectAllTreasures = () => {
     FROM
         treasures
     JOIN
-        shops ON treasures.shop_id = shops.shop_id;
-`);
+        shops ON treasures.shop_id = shops.shop_id
+    ORDER BY treasures.${sort_by} ASC
+`
+    );
 };
