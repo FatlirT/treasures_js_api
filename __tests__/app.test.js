@@ -37,7 +37,6 @@ describe("treasures", () => {
                 .get("/api/treasures")
                 .expect(200)
                 .then((res) => {
-                    console.log(res.body.treasures[0]);
                     const props = [
                         "treasure_id",
                         "treasure_name",
@@ -87,7 +86,7 @@ describe("treasures", () => {
                         body: { treasures },
                     } = res;
                     expect(treasures).toBeSortedBy("cost_at_auction", {
-                        // descending: true,
+                        descending: false,
                         // coerce: true,
                     });
                 });
@@ -117,7 +116,26 @@ describe("treasures", () => {
 
                     expect(
                         treasures.every(
-                            (treasure) => treasure.colour === "gold"
+                            (treasure) =>
+                                treasure.colour === "gold"
+                        )
+                    ).toBe(true);
+                });
+        });
+        test("should filter out the treasures by colour with multiple possible values", () => {
+            return request(app)
+                .get("/api/treasures?colour=gold%2Csilver")
+                .expect(200)
+                .then((res) => {
+                    const {
+                        body: { treasures },
+                    } = res;
+
+                    expect(
+                        treasures.every(
+                            (treasure) =>
+                                treasure.colour === "gold" ||
+                                treasure.colour === "silver"
                         )
                     ).toBe(true);
                 });
