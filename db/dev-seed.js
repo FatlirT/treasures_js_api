@@ -2,4 +2,5 @@ const data = require("./data/dev-data");
 const seed = require("./seed");
 const db = require("./");
 
-seed(data).then(() => db.end());
+const seedDev = () => seed(data).then(() => db.end());
+module.exports = seedDev();
