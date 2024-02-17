@@ -1,15 +1,19 @@
 const {
-	selectAllTreasures,
+    selectAllTreasures,
 } = require(`${__dirname}/../models/treasures.model`);
 
 exports.getAllTreasures = (req, res, next) => {
-	let { sort_by, colour, order } = req.query;
-	selectAllTreasures(sort_by, colour, order ? order.toUpperCase() : order)
-		.then((dbRes) => {
-			const data = dbRes.rows;
-			res.status(200).send({ treasures: data });
-		})
-		.catch((error) => {
-			next(error);
-		});
+    const { sort_by, order, ...filters } = req.query;
+    // format filter values into Array
+    for (const filterName in filters) {
+        filters[filterName] = filters[filterName].split(",");
+    }
+    selectAllTreasures(sort_by, order, filters)
+        .then((dbRes) => {
+            const data = dbRes.rows
+            res.status(200).send({ treasures: data });
+        })
+        .catch((error) => {
+            next(error);
+        });
 };
