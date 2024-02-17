@@ -5,6 +5,7 @@ const manageTables = require("./manage-tables");
 const { createRef, formatData } = require("./utils");
 
 const seed = async ({ shopData, treasureData }) => {
+    console.log("seeding...");
     await manageTables();
 
     const { rows: insertedShops } = await db.query(
@@ -41,6 +42,8 @@ const seed = async ({ shopData, treasureData }) => {
             )
         )
     );
+
+    console.log("seeding complete...");
 };
 
 module.exports = seed;
