@@ -1,6 +1,4 @@
-const db = require(`${__dirname}/db/index`);
 const express = require("express");
-
 const {
     getAllTreasures,
 } = require(`${__dirname}/controllers/treasures.controller.js`);
