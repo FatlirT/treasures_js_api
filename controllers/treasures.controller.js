@@ -9,8 +9,7 @@ exports.getAllTreasures = (req, res, next) => {
         filters[filterName] = filters[filterName].split(",");
     }
     selectAllTreasures(sort_by, order, filters)
-        .then((dbRes) => {
-            const data = dbRes.rows
+        .then((data) => {
             res.status(200).send({ treasures: data });
         })
         .catch((error) => {

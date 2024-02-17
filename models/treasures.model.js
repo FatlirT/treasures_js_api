@@ -63,5 +63,5 @@ exports.selectAllTreasures = (sort_by = "age", order = "ASC", filters) => {
 `,
             injectedVariables
         )
-        .then((result) => result);
+        .then((result) => result.rows);
 };
