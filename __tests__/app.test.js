@@ -1,4 +1,5 @@
 const request = require("supertest");
+require("../env")
 const db = require("../db");
 const app = require("../app");
 
